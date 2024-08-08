@@ -6,13 +6,29 @@ jobs:
   ascii_job:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout Repo
-      uses: actions/checkout@v4
+    - name: Install cowsay program
+      run: sudo apt-get install cowsay -y
 
     - name: execute shell script
-      run: |
-        chmod +x ./ascii-script.sh
-        ./ascii-script.sh
+      run: cowsay -f dragon 'Run for cover....' >> dragon.txt
 
-    - name: checkout Repo files
-      run: ls -lart
+    - name: sleep for 30 seconds
+      run: sleep 30
+
+  ascii_job1:
+    runs-on: ubuntu-latest
+    steps:
+    - name: sleep for 10 seconds
+      run: sleep 10
+
+    - name: Test file exists
+      run: grep -i 'dragon' dragon.txt
+
+  ascii_job2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: read file
+      run: cat dragon.txt
+
+    - name: deploy
+      run: echo deploying..
