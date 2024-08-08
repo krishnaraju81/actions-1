@@ -13,14 +13,19 @@ jobs:
       run: cowsay -f dragon 'Run for cover....' >> dragon.txt
 
     - name: sleep for 30 seconds
-      run: sleep 30
+      uses: actions/upload-artifact@v4
+      with:
+        name: dragon.txt
+        path: dragon.txt
 
   test:
     needs: develop
     runs-on: ubuntu-latest
     steps:
-    - name: sleep for 10 seconds
-      run: sleep 10
+    - name: download dragon.txt
+      uses: actions/download-artifact@v4
+      with:
+        name: dragon.txt
 
     - name: Test file exists
       run: grep -i 'dragon' dragon.txt
@@ -29,6 +34,11 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+    - name: download dragon.txt
+      uses: actions/download-artifact@v4
+      with:
+        name: dragon.txt
+                
     - name: read file
       run: cat dragon.txt
 
